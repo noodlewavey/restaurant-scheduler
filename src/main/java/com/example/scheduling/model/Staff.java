@@ -11,6 +11,14 @@ public class Staff {
         return id;
     }
 
+    public Staff(String firstName, String lastName, Role role, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+    }
+
+
     public String getFirstName() {
         return firstName;
     }
