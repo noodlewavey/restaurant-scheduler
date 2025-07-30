@@ -16,8 +16,63 @@ public class Shift {
     private LocalTime shiftEndTime;
 
 
-    
+    public Long getStaffId() {
+        return staffId;
+    }
+
+    public Role getRequiredRole() {
+        return requiredRole;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDate getShiftStartDate() {
+        return shiftStartDate;
+    }
+
+    public LocalDate getShiftEndDate() {
+        return shiftEndDate;
+    }
+
+    public LocalTime getShiftStartTime() {
+        return shiftStartTime;
+    }
+
+    public LocalTime getShiftEndTime() {
+        return shiftEndTime;
+    }
 
 
-    
+    public void setStaffId(Long staffId) {
+        this.staffId = staffId;
+    }
+
+    public void setRequiredRole(Role requiredRole) {
+        this.requiredRole = requiredRole;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setShiftStartDate(LocalDate shiftStartDate) {
+        this.shiftStartDate = shiftStartDate;
+    }
+
+    public void setShiftEndDate(LocalDate shiftEndDate) {
+        this.shiftEndDate = shiftEndDate;
+    }
+
+    public void setShiftStartTime(LocalTime shiftStartTime) {
+        this.shiftStartTime = shiftStartTime;
+    }
+
+    public void setShiftEndTime(LocalTime shiftEndTime) {
+        this.shiftEndTime = shiftEndTime;
+    }
 }
+
+
+    
