@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.stereotype.Repository;
+
 import com.example.scheduling.model.Staff;
 
 
-
+@Repository
 public class StaffRepository {
 
     private final Map<Long, Staff> staffMembers = new HashMap<>();
