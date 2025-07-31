@@ -29,8 +29,6 @@ public class ShiftController {
     public ResponseEntity<Shift> assignStaffToShift(@PathVariable Long shiftId,
                                    @RequestParam Long staffId) {
                                     //syntax here...
-        // You’ll add logic here later, e.g.:
-        // shiftService.assignStaffToShift(shiftId, staffId);
         Shift assignedShift = shiftRepository.assignShift(shiftId, staffId);
         return ResponseEntity.ok(assignedShift);
     }
