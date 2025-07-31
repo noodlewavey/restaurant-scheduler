@@ -20,5 +20,15 @@ public class ShiftController {
         Shift savedShift = shiftService.createShift(shift); //this validates if its okay
         return ResponseEntity.ok(savedShift);
     }
+
+    @PostMapping("/{shiftId}/assign")
+    public ResponseEntity<Shift> assignStaffToShift(@PathVariable Long shiftId,
+                                   @RequestParam Long staffId) {
+                                    //syntax here...
+        // You’ll add logic here later, e.g.:
+        // shiftService.assignStaffToShift(shiftId, staffId);
+        Shift assignedShift = shiftService.assignShift(shiftId, staffId);
+        return ResponseEntity.ok(assignedShift);
+    }
 }
 

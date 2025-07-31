@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Repository;
 
+import com.example.scheduling.model.Shift;
 import com.example.scheduling.model.Staff;
 
 
@@ -31,6 +32,11 @@ public class StaffRepository {
     public List<Staff> findAll() {
         //Convert staff members list to a list object bc list can let us index over it 
         return new ArrayList<>(staffMembers.values());
+    }
+
+     public Shift findById(Long id){
+        return staffMembers.get(id);
+        //returns full object 
     }
    
     
