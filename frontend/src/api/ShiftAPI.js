@@ -8,7 +8,8 @@ export const createShift = async (shiftData) => {
             body: JSON.stringify(shiftData)
         });
         if (!response.ok) {
-            throw new Error('Failed to create shift');
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to create shift');
         }
         return await response.json();
     } catch (error) {
@@ -26,7 +27,8 @@ export const assignShift = async (shiftId, staffId) => {
             }
         });
         if (!response.ok) {
-            throw new Error('Failed to assign shift');
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to assign shift');
         }
         return await response.json();
     } catch (error) {

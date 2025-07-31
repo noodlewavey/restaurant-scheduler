@@ -2,7 +2,8 @@ export const getAllStaffMembers = async () => {
     try {
         const response = await fetch('/staff/get-staff-members-list');
         if (!response.ok) {
-            throw new Error('Failed to fetch staff members');
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to fetch staff members');
         }
         return await response.json();
     } catch (error) {
@@ -21,7 +22,8 @@ export const saveStaffMember = async (staffData) => {
             body: JSON.stringify(staffData)
         });
         if (!response.ok) {
-            throw new Error('Failed to save staff member');
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to save staff member');
         }
         return await response.json();
     } catch (error) {
