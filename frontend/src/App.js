@@ -7,6 +7,11 @@ import AssignShiftForm from './components/shift/AssignShiftForm';
 
 function App() {
   const [tabIndex, setTabIndex] = useState(0);
+  const [refreshStaffList, setRefreshStaffList] = useState(0);
+
+  const handleStaffAdded = () => {
+    setRefreshStaffList(prev => prev + 1);
+  };
 
   return (
     <div className="App">
@@ -17,8 +22,8 @@ function App() {
 
       {tabIndex === 0 && (
         <div>
-          <AddStaffForm />
-          <StaffList />
+          <AddStaffForm onStaffAdded={handleStaffAdded} />
+          <StaffList key={refreshStaffList} />
         </div>
       )}
 

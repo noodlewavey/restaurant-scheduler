@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { saveStaffMember } from '../../api/StaffAPI';
 
-function AddStaffForm() {
+function AddStaffForm({ onStaffAdded }) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -40,6 +40,9 @@ function AddStaffForm() {
         phoneNumber: '',
         role: ''
       });
+      if (onStaffAdded) {
+        onStaffAdded();
+      }
     } catch (error) {
       setMessage(error.message || 'Failed to save staff member');
       setMessageColor('red');
