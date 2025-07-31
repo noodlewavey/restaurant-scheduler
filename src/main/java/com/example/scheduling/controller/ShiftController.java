@@ -16,9 +16,9 @@ public class ShiftController {
      }
 
     @PostMapping("/create-shift")
-    public ResponseEntity<Shift> saveStaff(@RequestBody Shift shift) {
-        Shift savedStaff = shiftService.createShift(shift); //this validates if its okay
-        return ResponseEntity.ok(savedStaff);
+    public ResponseEntity<Shift> createShift(@RequestBody Shift shift) {
+        Shift savedShift = shiftService.createShift(shift); //this validates if its okay
+        return ResponseEntity.ok(savedShift);
     }
 }
 
