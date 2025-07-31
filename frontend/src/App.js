@@ -1,28 +1,33 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-import { useEffect } from 'react';
-import { getAllStaffMembers, saveStaffMember } from './api/StaffAPI';
-import { createShift, assignShift } from './api/ShiftAPI';
-
+import AddStaffForm from './components/staff/AddStaffForm';
+import StaffList from './components/staff/StaffList';
+import CreateShiftForm from './components/shift/CreateShiftForm';
+import AssignShiftForm from './components/shift/AssignShiftForm';
 
 function App() {
+  const [tabIndex, setTabIndex] = useState(0);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <button onClick={() => setTabIndex(0)}>Staff Management</button>
+        <button onClick={() => setTabIndex(1)}>Shift Scheduling</button>
+      </div>
+
+      {tabIndex === 0 && (
+        <div>
+          <AddStaffForm />
+          <StaffList />
+        </div>
+      )}
+
+      {tabIndex === 1 && (
+        <div>
+          <CreateShiftForm />
+          <AssignShiftForm />
+        </div>
+      )}
     </div>
   );
 }
