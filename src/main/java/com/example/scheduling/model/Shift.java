@@ -15,6 +15,14 @@ public class Shift {
     private LocalTime shiftStartTime;
     private LocalTime shiftEndTime;
 
+    public Shift(Role requiredRole, LocalDate shiftStartDate, LocalDate shiftEndDate, LocalTime shiftStartTime, LocalTime shiftEndTime) {
+        //generate this constructor for tests
+        this.requiredRole = requiredRole;
+        this.shiftStartDate = shiftStartDate;
+        this.shiftEndDate = shiftEndDate;
+        this.shiftStartTime = shiftStartTime;
+        this.shiftEndTime = shiftEndTime;
+    }
 
     public Long getStaffId() {
         return staffId;
