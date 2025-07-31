@@ -44,9 +44,10 @@ public class ShiftRepository {
     return result;
 }
 
-    public Shift assignShift(Shift shift, Long staffId){
+    public Shift assignShift(Long shiftId, Long staffId){
+        Shift shift = shiftList.get(shiftId);
         if (shift.getStaffId() != null){
-            throw new IllegalStateException("Shift has already been assigned to a staff member!")
+            throw new IllegalStateException("Shift has already been assigned to a staff member!");
         }
         shift.setStaffId(staffId);
         Long id = shift.getId();

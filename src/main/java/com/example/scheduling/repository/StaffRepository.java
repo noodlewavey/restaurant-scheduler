@@ -34,7 +34,7 @@ public class StaffRepository {
         return new ArrayList<>(staffMembers.values());
     }
 
-     public Shift findById(Long id){
+     public Staff findById(Long id){
         return staffMembers.get(id);
         //returns full object 
     }

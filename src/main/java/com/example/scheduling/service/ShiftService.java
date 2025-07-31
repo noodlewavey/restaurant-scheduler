@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.example.scheduling.model.Shift;
+import com.example.scheduling.model.Staff;
 import com.example.scheduling.repository.ShiftRepository;
+import com.example.scheduling.repository.StaffRepository;
 
 @Service
 public class ShiftService {
@@ -13,8 +15,14 @@ public class ShiftService {
         private final ShiftRepository shiftRepository;
         //syntax: why private? 
 
-        public ShiftService(ShiftRepository shiftRepository) {
+        private final StaffRepository staffRepository;
+
+        private final StaffService staffService;
+
+        public ShiftService(ShiftRepository shiftRepository, StaffRepository staffRepository, StaffService staffService) {
         this.shiftRepository = shiftRepository;
+        this.staffRepository = staffRepository;
+        this.staffService = staffService;
     }
         public Shift createShift(Shift shift) {
             //convert shiftStartDate+shiftStartTime and enddate+endttime into flattened localDatetIME OBJECT 
@@ -46,7 +54,39 @@ public class ShiftService {
             //we can have overlap, can schedule multiple hosts, serrvers, blah blah
 
             return shiftRepository.save(shift);
+        }
+
+        public Shift assignShift(Long shiftId, Long staffId) {
+
+            Shift currShift = shiftRepository.findById(shiftId);
+            Staff assignedStaff = staffRepository.findById(staffId);
+
+            if (currShift == null)
+            {
+                throw new IllegalArgumentException("Shift not found with the id: " + shiftId);
+            }
+
+            if (assignedStaff == null) {
+                throw new IllegalArgumentException("Staff not found with the id: " + staffId);
+            }
+
+            if (assignedStaff.getRole() != currShift.getRequiredRole()){
+                throw new IllegalArgumentException("This staff's role doesn't align with the required role for the shift: " + currShift.getRequiredRole());
+            }
+
+            LocalDateTime assignedStart = LocalDateTime.of(currShift.getShiftStartDate(), currShift.getShiftStartTime());
+            LocalDateTime assignedEnd = LocalDateTime.of(currShift.getShiftEndDate(), currShift.getShiftEndTime());
+
+            if (!staffService.isStaffAvailable(staffId, assignedStart, assignedEnd)){
+                    throw new IllegalArgumentException("This staff member is not available during this assigned shift.");
+
+            }
+
+            return shiftRepository.assignShift(shiftId, staffId);
+
+
+        }
 
     
 }
-}
+

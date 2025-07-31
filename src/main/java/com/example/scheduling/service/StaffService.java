@@ -1,9 +1,12 @@
 package com.example.scheduling.service;
 
+import com.example.scheduling.model.Shift;
 import com.example.scheduling.model.Staff;
+import com.example.scheduling.repository.ShiftRepository;
 import com.example.scheduling.repository.StaffRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -11,8 +14,11 @@ public class StaffService {
 
     private final StaffRepository staffRepository;
 
-    public StaffService(StaffRepository staffRepository) {
+    private final ShiftRepository shiftRepository;
+
+    public StaffService(StaffRepository staffRepository, ShiftRepository shiftRepository) {
         this.staffRepository = staffRepository;
+        this.shiftRepository = shiftRepository;
     }
 
     public Staff createStaff(Staff staff) {
@@ -58,8 +64,26 @@ public class StaffService {
 
         return staffRepository.save(staff);
 
-
-
-
     }
+
+    public boolean isStaffAvailable(Long staffId, LocalDateTime addShiftStart, LocalDateTime addShiftEnd) {
+        //syntax....we take in flat addshiftStart, addShiftEnd
+    Staff staff = staffRepository.findById(staffId);
+    if (staff == null) {
+        throw new IllegalArgumentException("Staff not found.");
+    }
+
+    List<Shift> assignedShifts = shiftRepository.findShiftsByStaffId(staffId);
+    
+    for (Shift s : assignedShifts) {
+        LocalDateTime existingStart = LocalDateTime.of(s.getShiftStartDate(), s.getShiftStartTime());
+        LocalDateTime existingEnd = LocalDateTime.of(s.getShiftEndDate(), s.getShiftEndTime());
+
+        boolean overlaps = !(addShiftEnd.isBefore(existingStart) || addShiftStart.isAfter(existingEnd));
+        if (overlaps) return false;
+    }
+
+    return true;
+}
+
 }
