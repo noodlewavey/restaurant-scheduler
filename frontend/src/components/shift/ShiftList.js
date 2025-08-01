@@ -11,9 +11,11 @@ import {
   Typography 
 } from '@mui/material';
 import { getAllShifts } from '../../api/ShiftAPI';
+import { getStaffById } from '../../api/StaffAPI';
 
 function ShiftList() {
   const [shifts, setShifts] = useState([]);
+  const [staffNames, setStaffNames] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -22,6 +24,21 @@ function ShiftList() {
       try {
         const data = await getAllShifts();
         setShifts(data);
+        
+        // Fetch staff names for assigned shifts
+        const staffIds = [...new Set(data.filter(shift => shift.staffId).map(shift => shift.staffId))];
+        const staffNamesData = {};
+        
+        for (const staffId of staffIds) {
+          try {
+            const staff = await getStaffById(staffId);
+            staffNamesData[staffId] = `${staff.firstName} ${staff.lastName}`;
+          } catch (error) {
+            staffNamesData[staffId] = `Staff ID: ${staffId}`;
+          }
+        }
+        
+        setStaffNames(staffNamesData);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -72,7 +89,12 @@ function ShiftList() {
               <TableRow key={shift.id}>
                 <TableCell>{shift.id}</TableCell>
                 <TableCell>{shift.requiredRole}</TableCell>
-                <TableCell>{shift.staffId ? shift.staffId : 'Unassigned'}</TableCell>
+                <TableCell>
+                  {shift.staffId 
+                    ? staffNames[shift.staffId] || `Staff ID: ${shift.staffId}`
+                    : 'Unassigned'
+                  }
+                </TableCell>
                 <TableCell>{shift.shiftStartDate}</TableCell>
                 <TableCell>{shift.shiftEndDate}</TableCell>
                 <TableCell>{shift.shiftStartTime}</TableCell>

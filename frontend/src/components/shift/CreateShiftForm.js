@@ -14,7 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { createShift } from '../../api/ShiftAPI';
 
-function CreateShiftForm({ onShiftAdded }) {
+function CreateShiftForm({ onShiftAdded, onShiftFormSubmit }) {
   const [formData, setFormData] = useState({
     requiredRole: '',
     shiftStartDate: null,
@@ -63,6 +63,9 @@ function CreateShiftForm({ onShiftAdded }) {
       });
       if (onShiftAdded) {
         onShiftAdded();
+      }
+      if (onShiftFormSubmit) {
+        onShiftFormSubmit();
       }
     } catch (error) {
       setMessage(error.message || 'Failed to create shift');

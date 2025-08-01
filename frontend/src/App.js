@@ -10,12 +10,21 @@ function App() {
   const [tabIndex, setTabIndex] = useState(0);
   const [refreshStaffList, setRefreshStaffList] = useState(0);
   const [refreshShiftList, setRefreshShiftList] = useState(0);
+  const [refreshAssignForm, setRefreshAssignForm] = useState(0);
 
   const handleStaffAdded = () => {
     setRefreshStaffList(prev => prev + 1);
   };
 
   const handleShiftAdded = () => {
+    setRefreshShiftList(prev => prev + 1);
+  };
+
+  const handleShiftFormSubmit = () => {
+    setRefreshShiftList(prev => prev + 1);
+  };
+
+  const handleShiftAssigned = () => {
     setRefreshShiftList(prev => prev + 1);
   };
 
@@ -35,8 +44,8 @@ function App() {
 
       {tabIndex === 1 && (
         <div>
-          <CreateShiftForm onShiftAdded={handleShiftAdded} />
-          <AssignShiftForm />
+          <CreateShiftForm onShiftAdded={handleShiftAdded} onShiftFormSubmit={handleShiftFormSubmit} />
+          <AssignShiftForm refreshTrigger={refreshShiftList} onShiftAssigned={handleShiftAssigned} />
           <ShiftList key={refreshShiftList} />
         </div>
       )}
