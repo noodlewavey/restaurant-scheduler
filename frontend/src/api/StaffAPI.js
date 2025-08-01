@@ -30,4 +30,21 @@ export const saveStaffMember = async (staffData) => {
         console.error('Error saving staff member:', error);
         throw error;
     }
+};
+
+export const getStaffById = async (staffId) => {
+    try {
+        const response = await fetch(`/staff/${staffId}`);
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('Staff member not found');
+            }
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to fetch staff member');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching staff member:', error);
+        throw error;
+    }
 }; 

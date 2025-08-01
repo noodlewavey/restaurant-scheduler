@@ -32,4 +32,13 @@ public class StaffController {
         List<Staff> staffMembers = staffRepository.findAll();
         return ResponseEntity.ok(staffMembers);
     }
+
+    @GetMapping("/{staffId}")
+    public ResponseEntity<Staff> getStaffById(@PathVariable Long staffId) {
+        Staff staff = staffRepository.findById(staffId);
+        if (staff == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(staff);
+    }
 }
