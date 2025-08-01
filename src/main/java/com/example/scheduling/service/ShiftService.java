@@ -1,6 +1,7 @@
 package com.example.scheduling.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -87,6 +88,9 @@ public class ShiftService {
 
         }
 
-    
+    public List<Shift> getAllShifts() {
+        return shiftRepository.findAll();
+    }
+
 }
 

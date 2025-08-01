@@ -6,6 +6,8 @@ import com.example.scheduling.service.ShiftService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/shift")
@@ -32,6 +34,12 @@ public class ShiftController {
                                     //syntax here...
         Shift assignedShift = shiftRepository.assignShift(shiftId, staffId);
         return ResponseEntity.ok(assignedShift);
+    }
+
+    @GetMapping("/get-all-shifts")
+    public ResponseEntity<List<Shift>> getAllShifts() {
+        List<Shift> shifts = shiftService.getAllShifts();
+        return ResponseEntity.ok(shifts);
     }
 }
 

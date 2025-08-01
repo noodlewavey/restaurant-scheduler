@@ -34,6 +34,10 @@ public class ShiftRepository {
         //returns full object 
     }
     
+    public List<Shift> findAll() {
+        return new ArrayList<>(shiftList.values());
+    }
+    
     public List<Shift> findShiftsByStaffId(Long staffId) {
     List<Shift> result = new ArrayList<>();
     for (Shift shift : shiftList.values()) {
