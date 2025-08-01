@@ -14,7 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { createShift } from '../../api/ShiftAPI';
 
-function CreateShiftForm() {
+function CreateShiftForm({ onShiftAdded }) {
   const [formData, setFormData] = useState({
     requiredRole: '',
     shiftStartDate: null,
@@ -61,6 +61,9 @@ function CreateShiftForm() {
         shiftStartTime: null,
         shiftEndTime: null
       });
+      if (onShiftAdded) {
+        onShiftAdded();
+      }
     } catch (error) {
       setMessage(error.message || 'Failed to create shift');
       setMessageColor('red');
@@ -98,7 +101,13 @@ function CreateShiftForm() {
           <DatePicker
             label="Start Date"
             value={formData.shiftStartDate}
-            onChange={(date) => handleInputChange('shiftStartDate', date)}
+            onChange={(date) => {
+              handleInputChange('shiftStartDate', date);
+              // Reset end date if it's before the new start date
+              if (formData.shiftEndDate && date && formData.shiftEndDate.isBefore(date)) {
+                handleInputChange('shiftEndDate', null);
+              }
+            }}
             minDate={dayjs()}
             sx={{ flex: 1 }}
           />

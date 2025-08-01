@@ -4,13 +4,19 @@ import AddStaffForm from './components/staff/AddStaffForm';
 import StaffList from './components/staff/StaffList';
 import CreateShiftForm from './components/shift/CreateShiftForm';
 import AssignShiftForm from './components/shift/AssignShiftForm';
+import ShiftList from './components/shift/ShiftList';
 
 function App() {
   const [tabIndex, setTabIndex] = useState(0);
   const [refreshStaffList, setRefreshStaffList] = useState(0);
+  const [refreshShiftList, setRefreshShiftList] = useState(0);
 
   const handleStaffAdded = () => {
     setRefreshStaffList(prev => prev + 1);
+  };
+
+  const handleShiftAdded = () => {
+    setRefreshShiftList(prev => prev + 1);
   };
 
   return (
@@ -29,8 +35,9 @@ function App() {
 
       {tabIndex === 1 && (
         <div>
-          <CreateShiftForm />
+          <CreateShiftForm onShiftAdded={handleShiftAdded} />
           <AssignShiftForm />
+          <ShiftList key={refreshShiftList} />
         </div>
       )}
     </div>
