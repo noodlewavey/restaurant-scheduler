@@ -103,13 +103,13 @@ Frontend components -> API functions -> Controllers in backend -> Service Layer 
 
 ## INSTRUCTIONS ON HOW TO USE THE APP 
 
-#1 
+## 1.
 Staff Management Tab
   - First add a staff member according to the forms.
-#2
+## 2.
 Go to Shift Scheduling Tab
 - Create a shift in the top form, with a required role matching that of at least one staff member. Submit the shift.
-#3
+## 3.
 Still on Shift Scheduling Tab
 - Scroll down to the Assign Shift To Staff box.
 - Choose a staff member.
