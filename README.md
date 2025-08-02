@@ -1,3 +1,12 @@
+## Quick Start
+
+1. Start backend: `./mvnw spring-boot:run`
+2. Start frontend: `cd frontend && npm start`
+3. Open http://localhost:3000
+4. Test by adding staff and creating shifts!
+
+
+
 **SETUP INSTRUCTIONS:**
 
 Ensure you have these installed:
@@ -9,20 +18,20 @@ Java (JDK 11 or later)
 
 First clone the repository 
 
-**git clone https://github.com/noodlewavey/restaurant-scheduler.git
-cd restaurant-scheduler**
+`git clone https://github.com/noodlewavey/restaurant-scheduler.git
+cd restaurant-scheduler`
 
 Navigate to the backend directory:
 
-**cd src/main/java/com/example/scheduling**
+`cd src/main/java/com/example/scheduling`
 
 Build the backend using maven wrapper:
 
-**./mvnw clean install**
+`./mvnw clean install`
 
 Run the backend server
 
-**./mvnw spring-boot:run**
+`./mvnw spring-boot:run`
 
 The backend will now begin on **http://localhost:8080**
 
@@ -30,14 +39,14 @@ The backend will now begin on **http://localhost:8080**
 
 Navigate to the frontend
 
-**cd frontend**
+`cd frontend`
 
 Install dependencies 
 
-**npm install**
+`npm install`
 Start the dev server
 
-**npm test**
+`npm start`
 
 The frontend will be on **http://localhost:3000**
 
