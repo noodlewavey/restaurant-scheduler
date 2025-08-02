@@ -20,9 +20,7 @@ First clone the repository
 
 `git clone https://github.com/noodlewavey/restaurant-scheduler.git`
 
-Navigate to the backend directory:
-
-`cd src/main/java/com/example/scheduling`
+Make sure you're in the restaurant-scheduler directory, NOT inside any other directory.
 
 Build the backend using maven wrapper:
 
