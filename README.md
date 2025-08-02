@@ -7,7 +7,7 @@
 
 
 
-**SETUP INSTRUCTIONS:**
+## SETUP INSTRUCTIONS:
 
 Ensure you have these installed:
 
@@ -52,14 +52,26 @@ The frontend will be on **http://localhost:3000**
 
 Now you can run and test my application!
 
-**FEATURES IN MY APPLICATION**
+## FEATURES IN MY APPLICATION
 - Adds new staff members through a form with validation, no duplicates allowed
 - Displays all staff members in a table that automatically updates when new staff is needed
 - Creates new shifts through a form with date/time pickers 
 - Assigns staff to unassigned shifts through a form dropdown that filters by role matching, with availability checking to prevent assigning overlapping shifts
 - Displays all shifts in table that automatically updates when shifts are created or assigned.
 
-**MY APPROACH:**
+## API Endpoints
+
+**Staff:**
+- `GET /staff/get-staff-members-list` - Get all staff
+- `POST /staff/save-staff-member` - Add new staff
+- `GET /staff/{staffId}` - Get staff by ID
+
+**Shifts:**
+- `POST /shift/create-shift` - Create new shift
+- `GET /shift/get-all-shifts` - Get all shifts
+- `POST /shift/{shiftId}/assign` - Assign staff to shift
+
+## MY APPROACH:
 
 - This application is built using Spring Boot as the backend and React for the frontend.
 
@@ -73,7 +85,7 @@ Now you can run and test my application!
 
 - I used Material UI components for a professional look
 
-**KNOWN LIMITATIONS/TRADEOFFS:**
+## KNOWN LIMITATIONS/TRADEOFFS:
 
 - I used key-based remounting for StaffList.js, ShiftList.js (These are components to display all staff and shifts that update in real time). Because this is a timed assessment and an MVP, the remounting of the components that trigger fresh API calls was the simplest thing to implement and debug, and would be guaranteed to be consistent and show all the new data. But in production, I would not do this (poor performance, too many API calls). 
 
@@ -85,7 +97,7 @@ Now you can run and test my application!
 
 - I added unit tests for the basic functionalities of the backend, but I don’t have full automated end to end integration tests for the user flow. I mimicked this by testing the user experience manually on my browser, but if I had more time, I would write E2E tests in Cypress. 
 
-**FINAL DATA FLOW**
+## FINAL DATA FLOW
 
 
 Frontend components -> API functions -> Controllers in backend -> Service Layer -> Repository Layer -> In-memory Hash Map Storage 
