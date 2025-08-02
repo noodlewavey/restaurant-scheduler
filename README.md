@@ -20,7 +20,7 @@ First clone the repository
 
 `git clone https://github.com/noodlewavey/restaurant-scheduler.git`
 
-Make sure you're in the restaurant-scheduler directory, NOT inside any other directory.
+Make sure you're in the restaurant-scheduler directory, NOT inside any other directory (Maven wrapper is in this directory, we need to be in this directory to run.) 
 
 Build the backend using maven wrapper:
 
@@ -33,6 +33,7 @@ Run the backend server
 The backend will now begin on **http://localhost:8080**
 
 **FOR THE FRONTEND**
+Open a new terminal, make sure you're inside directory restaurant-scheduler.
 
 Navigate to the frontend
 
