@@ -1,7 +1,7 @@
 package com.example.scheduling.controller;
 
 import com.example.scheduling.model.Shift;
-import com.example.scheduling.repository.ShiftRepository;
+import com.example.scheduling.model.AssignShiftRequest;
 import com.example.scheduling.service.ShiftService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +15,8 @@ public class ShiftController {
 
     private final ShiftService shiftService;
 
-    private final ShiftRepository shiftRepository;
-
-    public ShiftController(ShiftService shiftService, ShiftRepository shiftRepository) {
+    public ShiftController(ShiftService shiftService) {
         this.shiftService = shiftService;
-        this.shiftRepository = shiftRepository;
      }
 
     @PostMapping("/create-shift")
@@ -30,9 +27,9 @@ public class ShiftController {
 
     @PostMapping("/{shiftId}/assign")
     public ResponseEntity<Shift> assignStaffToShift(@PathVariable Long shiftId,
-                                   @RequestParam Long staffId) {
+                                   @RequestBody AssignShiftRequest request) {
                                     //syntax here...
-        Shift assignedShift = shiftRepository.assignShift(shiftId, staffId);
+        Shift assignedShift = shiftService.assignShift(shiftId, request.getStaffId());
         return ResponseEntity.ok(assignedShift);
     }
 

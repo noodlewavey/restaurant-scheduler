@@ -22,12 +22,6 @@ public class StaffService {
     }
 
     public Staff createStaff(Staff staff) {
-        
-        // 1. Validate the role (must be one of the allowed values)
-        // 2. Possibly check for duplicates or other rules
-        // 3. Call repository to save the staff
-        // 4. Return the saved staff
-
         //
         //deconstruct requestbody and check if firstname string, lastname string, role follows. enum (SERVER, COOK, MANAGER, HOST), phone number is valid phone number 
         //check repo if staff with this firstname, lastname, and phonenumber exist (this particular combination)
@@ -68,6 +62,7 @@ public class StaffService {
 
     public boolean isStaffAvailable(Long staffId, LocalDateTime addShiftStart, LocalDateTime addShiftEnd) {
         //syntax....we take in flat addshiftStart, addShiftEnd
+
     Staff staff = staffRepository.findById(staffId);
     if (staff == null) {
         throw new IllegalArgumentException("Staff not found.");
@@ -75,14 +70,19 @@ public class StaffService {
 
     List<Shift> assignedShifts = shiftRepository.findShiftsByStaffId(staffId);
     
+    
     for (Shift s : assignedShifts) {
         LocalDateTime existingStart = LocalDateTime.of(s.getShiftStartDate(), s.getShiftStartTime());
         LocalDateTime existingEnd = LocalDateTime.of(s.getShiftEndDate(), s.getShiftEndTime());
+        
+        
+        boolean overlap = addShiftStart.isBefore(existingEnd) && addShiftEnd.isAfter(existingStart);
 
-        boolean overlaps = !(addShiftEnd.isBefore(existingStart) || addShiftStart.isAfter(existingEnd));
-        if (overlaps) return false;
+
+        if (overlap) {
+            return false;
+        }
     }
-
     return true;
 }
 

@@ -20,11 +20,12 @@ export const createShift = async (shiftData) => {
 
 export const assignShift = async (shiftId, staffId) => {
     try {
-        const response = await fetch(`/shift/${shiftId}/assign?staffId=${staffId}`, {
+        const response = await fetch(`/shift/${shiftId}/assign`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify({ staffId: staffId })
         });
         if (!response.ok) {
             const errorData = await response.json();

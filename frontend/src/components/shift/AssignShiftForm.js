@@ -49,9 +49,21 @@ function AssignShiftForm({ refreshTrigger, onShiftAssigned }) {
     const staffRole = getSelectedStaffRole();
     if (!staffRole) return [];
     
-    return shifts.filter(shift => 
-      shift.staffId === null && shift.requiredRole === staffRole
-    );
+    // Get all shifts for this role that are either unassigned or could be assigned to this staff member
+    return shifts.filter(shift => {
+      // Must match the role
+      if (shift.requiredRole !== staffRole) return false;
+      
+      // If shift is unassigned, it's available
+      if (shift.staffId === null) return true;
+      
+      // If shift is already assigned to this staff member, don't show it
+      if (shift.staffId === parseInt(selectedStaff)) return false;
+      
+      // For shifts assigned to other staff, we could potentially reassign them
+      // but for simplicity in MVP, let's only show unassigned shifts
+      return false;
+    });
   };
 
   const handleSubmit = async () => {
@@ -64,7 +76,14 @@ function AssignShiftForm({ refreshTrigger, onShiftAssigned }) {
         return;
       }
 
+      console.log('=== FRONTEND: Attempting to assign shift ===');
+      console.log('Shift ID:', selectedShift);
+      console.log('Staff ID:', selectedStaff);
+      
       const response = await assignShift(selectedShift, selectedStaff);
+      console.log('=== FRONTEND: Assignment successful ===');
+      console.log('Response:', response);
+      
       setMessage('Shift has been assigned!');
       setMessageColor('green');
       setSelectedStaff('');
@@ -82,6 +101,9 @@ function AssignShiftForm({ refreshTrigger, onShiftAssigned }) {
         onShiftAssigned();
       }
     } catch (error) {
+      console.log('=== FRONTEND: Assignment failed ===');
+      console.log('Error:', error);
+      console.log('Error message:', error.message);
       setMessage(error.message || 'Failed to assign shift');
       setMessageColor('red');
     }
@@ -125,7 +147,14 @@ function AssignShiftForm({ refreshTrigger, onShiftAssigned }) {
           onChange={(e) => setSelectedShift(e.target.value)}
           disabled={!selectedStaff}
         >
-          {selectedStaff && (
+          {selectedStaff && getUnassignedShiftsForRole().length === 0 && (
+            <MenuItem disabled>
+              <Typography sx={{ color: 'gray', fontStyle: 'italic' }}>
+                No shifts available for {getSelectedStaffRole()} role
+              </Typography>
+            </MenuItem>
+          )}
+          {selectedStaff && getUnassignedShiftsForRole().length > 0 && (
             <MenuItem disabled>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', fontWeight: 'bold' }}>
                 <span>SHIFT START DATE</span>
@@ -135,7 +164,7 @@ function AssignShiftForm({ refreshTrigger, onShiftAssigned }) {
               </Box>
             </MenuItem>
           )}
-          {getUnassignedShiftsForRole().map((shift) => (
+          {selectedStaff && getUnassignedShiftsForRole().map((shift) => (
             <MenuItem key={shift.id} value={shift.id}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                 <span>{shift.shiftStartDate}</span>

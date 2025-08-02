@@ -19,6 +19,7 @@ public class ShiftService {
         private final StaffRepository staffRepository;
 
         private final StaffService staffService;
+        
 
         public ShiftService(ShiftRepository shiftRepository, StaffRepository staffRepository, StaffService staffService) {
         this.shiftRepository = shiftRepository;
@@ -58,6 +59,7 @@ public class ShiftService {
         }
 
         public Shift assignShift(Long shiftId, Long staffId) {
+            //curr shift is the shift we're assigning to the staff member 
 
             Shift currShift = shiftRepository.findById(shiftId);
             Staff assignedStaff = staffRepository.findById(staffId);
@@ -75,15 +77,22 @@ public class ShiftService {
                 throw new IllegalArgumentException("This staff's role doesn't align with the required role for the shift: " + currShift.getRequiredRole());
             }
 
+            // Check if shift is already assigned
+            if (currShift.getStaffId() != null) {
+                throw new IllegalArgumentException("Shift is already assigned to staff member with ID: " + currShift.getStaffId());
+            }
+
             LocalDateTime assignedStart = LocalDateTime.of(currShift.getShiftStartDate(), currShift.getShiftStartTime());
             LocalDateTime assignedEnd = LocalDateTime.of(currShift.getShiftEndDate(), currShift.getShiftEndTime());
 
-            if (!staffService.isStaffAvailable(staffId, assignedStart, assignedEnd)){
-                    throw new IllegalArgumentException("This staff member is not available during this assigned shift.");
+            if (staffService.isStaffAvailable(staffId, assignedStart, assignedEnd)){
+                return shiftRepository.assignShift(shiftId, staffId);
+            }
+            else{
+                throw new IllegalArgumentException("Staff is not available during this time.");
 
             }
 
-            return shiftRepository.assignShift(shiftId, staffId);
 
 
         }
