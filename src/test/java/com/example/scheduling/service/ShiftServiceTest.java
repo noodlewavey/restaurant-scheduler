@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.scheduling.service;
 
 import com.example.scheduling.model.Role;
 import com.example.scheduling.model.Shift;
