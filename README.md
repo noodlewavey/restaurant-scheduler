@@ -18,8 +18,8 @@ Java (JDK 11 or later)
 
 First clone the repository 
 
-`git clone https://github.com/noodlewavey/restaurant-scheduler.git
-cd restaurant-scheduler`
+`git clone https://github.com/noodlewavey/restaurant-scheduler.git`
+`cd restaurant-scheduler`
 
 Navigate to the backend directory:
 
